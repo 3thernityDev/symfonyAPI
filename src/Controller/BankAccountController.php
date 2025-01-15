@@ -28,26 +28,26 @@ final class BankAccountController extends AbstractController
         $this->serialize = $serialize;
     }
 
-    private array $accountTest = [
-        [
-            'id' => 1,
-            'accountNumber' => '123456789',
-            'balance' => 1000.00,
-            'currency' => 'USD'
-        ],
-        [
-            'id' => 2,
-            'accountNumber' => '987654321',
-            'balance' => 2500.50,
-            'currency' => 'EUR'
-        ],
-        [
-            'id' => 3,
-            'accountNumber' => '456789123',
-            'balance' => 300.75,
-            'currency' => 'GBP'
-        ]
-    ];
+    // private array $accountTest = [
+    //     [
+    //         'id' => 1,
+    //         'accountNumber' => '123456789',
+    //         'balance' => 1000.00,
+    //         'currency' => 'USD'
+    //     ],
+    //     [
+    //         'id' => 2,
+    //         'accountNumber' => '987654321',
+    //         'balance' => 2500.50,
+    //         'currency' => 'EUR'
+    //     ],
+    //     [
+    //         'id' => 3,
+    //         'accountNumber' => '456789123',
+    //         'balance' => 300.75,
+    //         'currency' => 'GBP'
+    //     ]
+    // ];
 
     ####################
     # GET /bankAccounts#
@@ -202,6 +202,42 @@ final class BankAccountController extends AbstractController
                     'code' => 400,
                 ], 400);
             }
+        } else {
+            return $this->json([
+                'message' => 'Compte en banque non trouvé',
+                'code' => 404,
+            ], 404);
+        }
+    }
+
+    #######################
+    # PATCH /bankAccounts#
+    ######################
+    #[Route('/{id}', name: 'patch', methods: ['PATCH'])]
+    public function patch(int $id, Request $request): JsonResponse
+    {
+        $account = $this->bankAccountRepository->find($id);
+        $data = json_decode($request->getContent(), true); //Récupere les données envoyées et les transforme en tableau.
+
+        if ($account) {
+            if (isset($data['accountNumber'])) {
+                $account->setAccountNumber($data['accountNumber']);
+            }
+            if (isset($data['balance'])) {
+                $account->setBalance($data['balance']);
+            }
+            if (isset($data['currency'])) {
+                $account->setCurrency($data['currency']);
+            }
+
+            $this->em->persist($account);
+            $this->em->flush();
+
+            return $this->json([
+                'message' => 'Compte en banque modifié',
+                'data' => json_decode($this->serialize->serialize($account, 'json')),
+                'code' => 200,
+            ], 200);
         } else {
             return $this->json([
                 'message' => 'Compte en banque non trouvé',
