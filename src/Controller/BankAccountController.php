@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\BankAccount;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

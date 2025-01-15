@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\TransactionRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: TransactionRepository::class)]
+class Transaction
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column]
+    private ?float $montant = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'transactions')]
+    private ?BankAccount $account = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMontant(): ?float
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(float $montant): static
+    {
+        $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getAccount(): ?BankAccount
+    {
+        return $this->account;
+    }
+
+    public function setAccount(?BankAccount $account): static
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+}
