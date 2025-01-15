@@ -202,6 +202,11 @@ final class BankAccountController extends AbstractController
                     'code' => 400,
                 ], 400);
             }
+        } else {
+            return $this->json([
+                'message' => 'Compte en banque non trouvé',
+                'code' => 404,
+            ], 404);
         }
     }
 
@@ -252,6 +257,14 @@ final class BankAccountController extends AbstractController
                     'code' => 200
                 ],
                 200
+            );
+        } else {
+            return $this->json(
+                [
+                    'message' => 'Compte en banque non trouvé',
+                    'code' => 404
+                ],
+                404
             );
         }
     }
