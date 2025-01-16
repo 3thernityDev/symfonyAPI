@@ -20,7 +20,8 @@ class Transaction
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'transactions')]
-    private ?BankAccount $account = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private BankAccount $account;
 
     public function getId(): ?int
     {
@@ -51,12 +52,12 @@ class Transaction
         return $this;
     }
 
-    public function getAccount(): ?BankAccount
+    public function getAccount(): BankAccount
     {
         return $this->account;
     }
 
-    public function setAccount(?BankAccount $account): static
+    public function setAccount(BankAccount $account): static
     {
         $this->account = $account;
 

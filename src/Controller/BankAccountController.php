@@ -68,7 +68,7 @@ final class BankAccountController extends AbstractController
 
         return $this->json([
             'message' => 'Liste des comptes en banque',
-            'data' => json_decode($this->serialize->serialize($accounts, 'json')),
+            'data' => json_decode($this->serialize->serialize($accounts, 'json', ['groups' => ['bankAccount']])),
             'code' => 200,
         ], 200);
     }

@@ -6,6 +6,7 @@ use App\Repository\BankAccountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BankAccountRepository::class)]
 class BankAccount
@@ -13,15 +14,19 @@ class BankAccount
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['bankAccount'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['bankAccount'])]
     private ?int $accountNumber = null;
 
     #[ORM\Column]
+    #[Groups(['bankAccount'])]
     private ?int $balance = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['bankAccount'])]
     private ?string $currency = null;
 
     /**
