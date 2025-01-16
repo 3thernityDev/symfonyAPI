@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -11,12 +13,15 @@ class Transaction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['transactions'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['transactions'])]
     private ?float $montant = null;
 
     #[ORM\Column]
+    #[Groups(['transactions'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'transactions')]

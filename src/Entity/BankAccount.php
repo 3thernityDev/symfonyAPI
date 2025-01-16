@@ -32,7 +32,8 @@ class BankAccount
     /**
      * @var Collection<int, Transaction>
      */
-    #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'account')]
+    #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'account', cascade: ["persist"])]
+    #[Groups(['transactions'])]
     private Collection $transactions;
 
     public function __construct()
